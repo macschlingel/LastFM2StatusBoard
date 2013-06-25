@@ -13,7 +13,6 @@ DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
  
   0. You just DO WHAT THE FUCK YOU WANT TO. 
 -->
-
 <?php
     #check if a lastfm Username was given as a parameter
     if(isset($_GET['lastfmusername'])) {
@@ -30,6 +29,12 @@ DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
     $track = explode("<title>", $feedItem[1]);
     #split at the </title> so we can discard everything after the atual title information
     $track = explode("</title>", $track[1]);
+    #truncate the title if toooo long
+    if (strlen($track[0]) > 35) {
+        $track = substr($track[0],0,33).'...';
+    } else {
+        $track = $track[0];
+    }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
        "http://www.w3.org/TR/html4/loose.dtd">
@@ -41,7 +46,7 @@ DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
 
 <script type="text/javascript">
 $(document).ready(function() {
-	var originalFontSize = 11;
+	var originalFontSize = 12;
 	var sectionWidth = $('#titleinfo').width();
 
 	$('#titleinfo span').each(function(){
@@ -70,7 +75,7 @@ $(document).ready(function() {
 </head>
 <body>
     <div id="titleinfo">
-    <span><?php echo (strtoupper($track[0])); ?></span>
+    <span>♪ <?php echo strtoupper($track); ?> ♪</span>
     </div>
 </body>
 </html>
